@@ -1,0 +1,845 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>UMemo</title>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script-->
+
+<script src='//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//unpkg.com/axios/dist/axios.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+<!--script src="//code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<style type="text/css">
+body {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100%;
+}
+h1 {
+    display: inline-block;
+}
+.u {
+    background-color: #fff;
+    color: #4a148c;
+    width: 68px;
+    height: 68px;
+    text-align: center;
+    margin: 0;
+}
+p {
+    font-size: 12px;
+}
+pre {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    font-family: inherit;
+    white-space: pre-wrap;
+}
+@media (min-width: 576px) {
+    .card-columns {
+        column-count: 2;
+    }
+}
+@media (min-width: 720px) {
+    .card-columns {
+        column-count: 3;
+    }
+}
+@media (min-width: 960px) {
+    .card-columns {
+        column-count: 4;
+    }
+}
+@media (max-width: 576px) {
+    .card-columns {
+        column-count: 1;
+    }
+}
+textarea.table_item {
+    overflow: hidden;
+    padding: 2px;
+    resize: none;
+}
+textarea.table_item:focus {
+    box-shadow: none;
+}
+.textarea-block {
+    display: grid;
+    grid-template-columns: 32px auto;
+}
+.show-animated {
+    animation-duration: .3s;
+    animation-name: show-redact;
+}
+@keyframes show-redact {
+  0% {
+      transform: scale(0, 0);
+  }
+  
+  80% {
+      transform: scale(1.05, 1.05);
+  }
+
+  100% {
+      transform: scale(1, 1);
+  }
+}
+.dot {
+    display: block;
+    height: 8px;
+    width: 8px;
+    margin: 12px;
+    border-radius: 100%;
+    background-color: black;
+}
+.keep-color-white {
+    background-color: white;
+}
+.keep-color-red {
+    background-color: #ff6f6f;
+}
+.keep-color-orange {
+    background-color: #ffb443;
+}
+.keep-color-yellow {
+    background-color: #ffff00;
+}
+.keep-color-green {
+    background-color: #44ff53;
+}
+.keep-color-lightblue {
+    background-color: #29eaff;
+}
+.keep-color-blue {
+    background-color: #605bff;
+}
+.keep-color-purpur {
+    background-color: #ff38ff;
+}
+.anim-color {
+  transition-property: background-color;
+  transition-duration: .3s;
+}
+@media (max-width: 992px) {
+    #menu-group {
+        display: grid;
+        grid-template-columns: auto 72px 85px;
+    }
+}
+@media (max-width: 768px) {
+    #menu-group {
+        display: grid;
+        grid-template-columns: auto 72px 40px;
+    }
+}
+#search-icon {
+    font-family: Segoe UI Symbol,serif;
+    border-radius: 0;
+    border-top-left-radius: 19px;
+    border-bottom-left-radius: 19px;
+    color: white;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+@media (min-width: 992px) {
+    #search-input {
+        max-width: 0;
+        padding-left: 0;
+        padding-right: 0;
+        transition-property: max-width, padding-left, padding-right;
+        transition-duration: .3s;
+    }
+    #search-block:hover #search-input {
+        max-width: 200px;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    #search-input:focus {
+        max-width: 200px;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+.check-box {
+    margin: 9px;
+}
+.img-link {
+    height: 24px;
+    width: 24px;
+    background-size: contain;
+}
+#gmail-img-link {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png');
+}
+#tel-img-link {
+    background-image: url('http://s1.iconbird.com/ico/2013/9/446/w512h5121380376664MetroUIPhoneAlt.png');
+}
+#whatsapp-img-link {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/19/WhatsApp_logo-color-vertical.svg');
+}
+#vk-img-link {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/21/VK.com-logo.svg');
+}
+.add-float-button {
+    right: 16px;
+    bottom: 48px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #7c43bd;
+    cursor: pointer;
+    z-index: 1;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+    
+    transition-property: all;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+    transition-delay: 0s;
+}
+.add-float-button i {
+    line-height: 56px;
+    font-size: 1.6rem;
+    color: white;
+    width: inherit;
+    display: inline-block;
+    text-align: center;
+}
+</style>
+
+<script type="text/javascript">
+    if(localStorage.getItem("login") == null || localStorage.getItem("pass") == null) {
+        location.href = "regist";
+    }
+
+    Vue.component("keep-card", {
+        props: ['keep', 'keepkey', 'keepparams'],
+        template: `<div class="card shadow" :class="{'keep-color-white':(keepColor==-1), 'keep-color-red':(keepColor==-2), 
+                                                'keep-color-orange':(keepColor==-3), 'keep-color-yellow':(keepColor==-4),
+                                                'keep-color-green':(keepColor==-5), 'keep-color-lightblue':(keepColor==-6),
+                                                'keep-color-blue':(keepColor==-7), 'keep-color-purpur':(keepColor==-8)}">
+            <div class="card-header modal-header text-right p-2">
+                <h4 class="card-title modal-title text-left" style="word-break: break-all;">{{keep[0][1]}}</h4>
+                <div class="btn-group" role="group">
+                    <button :id="'btnGroup'+keepkey" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                    <div class="dropdown-menu" :aria-labelledby="'btnGroup'+keepkey">
+                        <button type="button" class="dropdown-item"  @click="redact(keepkey)">Редактировать</button>
+                        <button type="button" class="dropdown-item"  @click="copy(keepkey)">Создать копию</button>
+                    </div>
+                  </div>
+            </div>
+            <div v-for="(text, index) in keep" v-if="index!=0" :kep="index" :class="{'card-body': (text[0]=='paragraph'),
+                    'list-group list-group-flush': (text[0]=='tableItem')}">
+                <pre style="background-color: transparent;"><p style="background-color: transparent;" class="lead" :class="{'card-text': (text[0]=='paragraph'),
+                        'list-group-item py-0': (text[0]=='tableItem')}">{{(text[0]=='tableItem')?
+                            ((text[1].length > 3)?
+                                ((text[1].substring(0, 3) == "&t$")?("✓ " + text[1].substring(3) + ""):
+                                    ((text[1].substring(0, 3) == "&f$")?("– " + text[1].substring(3)):("• " + text[1])))
+                                :("• " + text[1]))
+                            :text[1]}}</p></pre>
+            </div>
+        </div>`,
+        computed: {
+            keepColor: function() {
+                return JSON.parse(this.keepparams)['color_keep'];
+            }
+        },
+        methods: {
+            redact: function(keepKey) {
+                this.$emit('redact', keepKey);
+            }, 
+            copy: function(keepKey) {
+                this.$emit('copy', keepKey);
+            }
+        }
+    });
+    Vue.component("paragraph", {
+        props: ['datas', 'which'],
+        data: function() {
+            return {data_keep: this.datas};
+        },
+        template: `<textarea class="form-control border-0 table_item show-animated" style="background-color: transparent; color: black;" rows="1" 
+            onkeydown="textAreaHeight(this); deleteItem(event, this);" v-model="data_keep" @input="$emit('input', data_keep)"></textarea>`
+    });
+    var which_table;
+    Vue.component("tableItem", {
+        props: ['datas', 'which'],
+        data: function() {
+            return {
+                data_keep: this.datas,
+                vis_btn: true, 
+                which_t: this.which
+            };
+        },
+        template: `<div class="container-fluid p-0">
+            <div v-for="(item, index) in data_keep" class="textarea-block show-animated">
+                <input type="checkbox" v-if="is_checked" class="check-box" v-model="data_keep[index][1]" @change="$emit('input', data_keep)" key="check">
+                <span class="dot" v-else key="dot"></span>
+                <textarea class="form-control border-0 table_item d-inline-block" style="background-color: transparent;" rows="1" 
+                    :style="{textDecoration: (is_checked?(data_keep[index][1]?'line-through':'none'):'none'), 
+                    color: (is_checked?(data_keep[index][1]?'gray':'black'):'black')}"
+                    onkeydown="textAreaHeight(this); deleteItem(event, this);" v-model="data_keep[index][0]" @input="$emit('input', data_keep)" 
+                    @focus="takeFocus(index)" @blur="takeBlur"></textarea>
+            </div>
+            <button v-if="vis_btn" type="button" class="btn btn-sm btn-block btn-outline-secondary rounded-0" @click="addItem">Добавить строку</button>
+        </div>`,
+        methods: {
+            addItem: function() {
+                if(this.data_keep[0].length == 1) {
+                    this.data_keep.push([""]);
+                } else {
+                    this.data_keep.push(["", false]);
+                }
+            }, 
+            takeFocus: function(index) {
+                which_table = this.which_t;
+                this.$emit('fb_ta', (typeof this.data_keep[index][1] == 'boolean')?'make_checked':'make_unchecked');
+            }, 
+            takeBlur: function() {
+                this.$emit('fb_ta', 'blur_ta');
+            }
+        }, 
+        watch: {
+            data_keep: function(val) {
+                this.vis_btn = false;
+                for (let item in val) {
+                    if(item != "") 
+                        this.vis_btn = true;
+                }
+            }
+        }, 
+        computed: {
+            is_checked: function() {
+                return (typeof this.data_keep[0][1] == 'boolean');
+            }
+        }
+    });
+    var is_dot = (item) => {
+        if (item.length > 3) {
+            if(item.substring(0, 3) != "&t$" || item.substring(0, 3) != "&f$") {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    const deleteItem = (e, el) => {
+        if (e.keyCode == 8 && el.value == "") {
+            if (el.classList.contains('show-animated')) {
+                el.remove();
+            } else {
+                if (el.parentElement.parentElement.children.length == 2)
+                    el.parentElement.parentElement.remove();
+                else
+                    el.parentElement.remove();
+            }
+        }
+    }
+</script>
+</head>
+<body>
+    
+    <div class="container-fluid p-0 position-relative" id="umemo" style="min-height: 100vh;">
+        <div class="shadow container-fluid p-4 m-0" style="background-color: #4a148c">
+            <div class="row">
+                <div class="col-lg col-md-6 col-sm-12">
+                    <h1 class="rounded-circle display-4 u">U</h1>
+                    <h1 class="text-white display-4">Memo</h1>
+                </div>
+                <div class="col-lg-auto col-md-6 col-sm-12 text-right" style="vertical-align: middle; padding-top: 16px;">
+                    <div id="menu-group" class="input-group btn-group mb-2">
+                        <div id="search-block" style="display: flex; flex-direction: row; justify-content: flex-start;">
+                            <div class="input-group-prepend">
+                                <div id="search-icon" class="input-group-text">&#128269;</div>
+                            </div>
+                            <input type="text" id="search-input" class="form-control rounded-0" placeholder="Поиск" v-model="search">
+                        </div>
+                        <button type="button" class="btn btn-secondary" @click="singOut">Выйти</button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" style="border-top-right-radius: 19px; border-bottom-right-radius: 19px;" 
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="d-none d-md-inline-block">Меню</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <label class="dropdown-item m-0">
+                                    Изменить фон
+                                    <input id="back-image-up" class="d-none" @change="changeBackImage" name="picture" type="file" accept="image/jpeg,image/png,image/jpg"/>
+                                </label>
+                                <button class="dropdown-item" type="button" v-show="haveBackImage" @click="deleteBackImage">Удалить фон</button>
+                                <a href="umemo.apk" class="dropdown-item">UMemo на Android</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <a class="position-fixed add-float-button d-block d-sm-none" @click="newKeep"><i class="material-icons">add</i></a>
+        
+        <div class="container my-4 d-none d-sm-block">
+            <div class="btn-group btn-block" style="background-color: white; border-radius: 19px;">
+                <button type="button" class="btn btn-outline-secondary btn-block text-left" style="border-radius: 19px;" 
+                    @click="newKeep">Создать <span class="d-none d-md-inline-block">новую заметку</span></button>
+            </div>
+        </div>
+        
+        <div class="modal fade in" id="new-keep-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content anim-color" :class="{'keep-color-white':(keepColor==-1), 'keep-color-red':(keepColor==-2), 
+                                                    'keep-color-orange':(keepColor==-3), 'keep-color-yellow':(keepColor==-4),
+                                                    'keep-color-green':(keepColor==-5), 'keep-color-lightblue':(keepColor==-6),
+                                                    'keep-color-blue':(keepColor==-7), 'keep-color-purpur':(keepColor==-8)}">
+                    <div class="modal-body p-0">
+                        <ul class="nav nav-tabs container-fluid p-0">
+                            <li class="nav-item col-3 p-0">
+                                <a class="nav-link text-center" style="color: black;" href="#collapseOne" data-toggle="collapse" aria-expanded="true" aria-controls="collapseOne">Цвет</a>
+                            </li>
+                            <li class="nav-item col-4 p-0">
+                                <a class="nav-link text-center" style="color: black; cursor: pointer;" @click="add_table"
+                                    ><span class="d-none d-md-inline-block">Добавить с</span><span class="d-inline-block d-md-none">C</span>писок</a>
+                            </li>
+                            <li class="nav-item show fade col-5 p-0" :style="{opacity: (is_table?1:0)}">
+                                <a class="nav-link text-center d-none d-md-block" style="color: black; cursor: pointer; background-color: transparent;" @click="change_checked"
+                                    >{{(text_change_checked?"Сделать отмечаемым":"Сделать обычным")}}</a>
+                                <a class="nav-link text-center d-block d-md-none" style="color: black; cursor: pointer; background-color: transparent;" @click="change_checked"
+                                    >{{(text_change_checked?"Задачи":"Отменить")}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-header p-0" id="accordion">
+                        <div id="collapseOne" class="collapse container-fluid" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="row">
+                                <div class="col-6 container-fluid">
+                                    <div class="row">
+                                        <button class="col-3 btn rounded-0" style="background-color: white; min-height: 30px;" @click="keepColor=-1"></button>
+                                        <button class="col-3 btn rounded-0" style="background-color: red; min-height: 30px;" @click="keepColor=-2"></button>
+                                        <button class="col-3 btn rounded-0" style="background-color: orange; min-height: 30px;" @click="keepColor=-3"></button>
+                                        <button class="col-3 btn rounded-0" style="background-color: yellow; min-height: 30px;" @click="keepColor=-4"></button>
+                                    </div>
+                                </div>
+                                <div class="col-6 container-fluid">
+                                    <div class="row">
+                                        <button class="col-3 btn rounded-0" style="background-color: green; min-height: 30px;" @click="keepColor=-5"></button>
+                                        <button class="col-3 btn rounded-0" style="background-color: #75bbfd; min-height: 30px;" @click="keepColor=-6"></button>
+                                        <button class="col-3 btn rounded-0" style="background-color: blue; min-height: 30px;" @click="keepColor=-7"></button>
+                                        <button class="col-3 btn rounded-0" style="background-color: violet; min-height: 30px;" @click="keepColor=-8"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-header p-0">
+                        <input type="text" class="form-control border-0 form-control-lg py-0" style="background-color: transparent;" placeholder="Заголовок" v-model="title">
+                    </div>
+                    <div id="redact-keep-body" class="modal-body p-0">
+                        <textarea class="form-control border-0 table_item" style="background-color: transparent; color: black;" rows="1" 
+                            onkeydown="textAreaHeight(this)" placeholder="Текст заметки" v-model="paragraph"></textarea>
+                        <div v-for="(new_keep_line, index) in new_keep_data" :is="new_keep_line[0]" :which="index" :datas="new_keep_line[1]" v-model="new_keep_line[1]" @fb_ta="fb_ta($event)"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="remove">Удалить</button>
+                        <button type="button" class="btn btn-primary" @click="save">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container py-4">
+            <div class="card-columns" style="padding-bottom: 48px;">
+                <keep-card v-for="(keep, key, index) of keeps" :key="index" :keepparams="keep.keep_params" :keep="keep.table_keep_text" :keepkey="key" @redact="redactKeep" @copy="copyKeep"></keep-card>
+            </div>
+        </div>
+        
+        <footer class="shadow position-absolute w-100 pt-2" style="background-color: #7c43bd; bottom: 0;">
+            <div class="container py-2">
+                <div class="row">
+                    <p class="d-inline-block col-7 col-md-8 align-middle h6 font-weight-light text-white">Партнеры сервиса: </p>
+                    <span class="d-inline-block col-5 col-md-4 pl-0">
+                        <a class="d-inline-block align-middle text-white mr-2" href="https://admire.social">
+                            Admire Social
+                        </a>
+                        <a class="d-inline-block align-middle text-white mr-2" href="https://fur-chins.ru">
+                            ABFC - Меховые шиншиллы
+                        </a>
+                    </span>
+                </div>
+                <div class="row">
+                    <p class="d-inline-block col-7 col-md-8 align-middle h6 font-weight-light text-white">Связь с разработчиком: </p>
+                    <span class="d-inline-block col-5 col-md-4">
+                        <a class="d-inline-block align-middle" style="margin: 0 calc(12% - 13px);" href="mailto:alexbidenko1998@gmail.com">
+                            <h2 class="text-hide img-link" id="gmail-img-link" data-toggle="tooltip" data-placement="top" title="alexbidenko1998@gmail.com">Gmail</h2>
+                        </a>
+                        <a class="d-inline-block align-middle" style="margin: 0 calc(12% - 13px);" href="tel:89528313364">
+                            <h2 class="text-hide img-link" id="tel-img-link" data-toggle="tooltip" data-placement="top" title="+7-(952)-831-3363">Телефон</h2>
+                        </a>
+                        <a class="d-inline-block align-middle" style="margin: 0 calc(12% - 13px);" href="https://wa.me/79528313364">
+                            <h2 class="text-hide img-link" id="whatsapp-img-link" data-toggle="tooltip" data-placement="top" title="+7-(952)-831-3363">WhatsApp</h2>
+                        </a>
+                        <a class="d-inline-block align-middle" style="margin: 0 calc(12% - 13px);" href="https://vk.com/alexbidenko">
+                            <h2 class="text-hide img-link" id="vk-img-link" data-toggle="tooltip" data-placement="top" title="id: alexbidenko">VK</h2>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+<script type="text/javascript">
+    //import keepCard from './vue-components/keepcard.vue';
+    //const keepCard = () => import('./vue-components/keepcard.vue');
+
+    var umemo = new Vue({
+        el: "#umemo",
+        //components: { keepCard },
+        data: {
+            keeps: {},
+            keepsOrigin: {},
+            search: "",
+            keepName: "",
+            keepColor: -1,
+            title: "",
+            paragraph: "",
+            new_keep_data: [],
+            haveBackImage: false,
+            is_table: false,
+            text_change_checked: true
+        },
+        created () {
+            $.ajax({
+                url: '../get_keeps.php',
+                type: 'POST',
+                data: {login: localStorage.getItem("login"), pass: localStorage.getItem("pass")},
+                success: function(data) {
+                    umemo.keepsOrigin = JSON.parse(data);
+                    var ob = {};
+                    for (let keep in umemo.keepsOrigin) {
+                        if (umemo.keepsOrigin[keep] != null) {
+                            ob[keep] = umemo.keepsOrigin[keep]
+                        }
+                    }
+                    umemo.keeps = ob;
+                }
+            });
+            $.ajax({
+                url: '../get_params.php',
+                type: 'POST',
+                data: {login: localStorage.getItem("login"), pass: localStorage.getItem("pass")},
+                success: function(data) {
+                    let back_image = JSON.parse(data).back_image;
+                    if (back_image != "") {
+                        $('body').css('backgroundImage', 'url("' + back_image + '")');
+                        umemo.haveBackImage = true;
+                    }
+                }
+            });
+            setInterval(function () {
+                $.ajax({
+                    url: '../get_keeps.php',
+                    type: 'POST',
+                    data: {login: localStorage.getItem("login"), pass: localStorage.getItem("pass")},
+                    success: function(data) {
+                        umemo.keepsOrigin = JSON.parse(data);
+                        for (let keep in umemo.keepsOrigin) {
+                            if (umemo.keepsOrigin[keep] != null) {
+                                for (let i = 0; i < umemo.keepsOrigin[keep].table_keep_text.length; i++) {
+                                    if (umemo.keepsOrigin[keep].table_keep_text[i][1].toLowerCase()
+                                            .indexOf(umemo.search.toLowerCase()) > -1) {
+                                        umemo.keeps[keep] = umemo.keepsOrigin[keep];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }, 20000);
+        },
+        watch: {
+            search: function() {
+                this.keeps = {};
+                for (let keep in this.keepsOrigin) {
+                    if (this.keepsOrigin[keep] != null) {
+                        for (let i = 0; i < this.keepsOrigin[keep].table_keep_text.length; i++) {
+                            if (this.keepsOrigin[keep].table_keep_text[i][1].toLowerCase()
+                                    .indexOf(this.search.toLowerCase()) > -1) {
+                                this.keeps[keep] = this.keepsOrigin[keep];
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        methods: {
+            singOut: function() {
+                localStorage.removeItem("login");
+                localStorage.removeItem("pass");
+                location.href = "regist";
+            },
+            newKeep: function() {
+                $('#new-keep-modal').modal('show');
+            },
+            redactKeep: function(keep) {
+                this.keepName = keep;
+                this.keepColor = Number(JSON.parse(this.keepsOrigin[keep].keep_params)['color_keep']);
+                this.title = this.keepsOrigin[keep].table_keep_text[0][1];
+                this.paragraph = this.keepsOrigin[keep].table_keep_text[1][1];
+                for (let i = 2; i < this.keepsOrigin[keep].table_keep_text.length; i++) {
+                    if(this.keepsOrigin[keep].table_keep_text[i][0] == "tableItem" && this.keepsOrigin[keep].table_keep_text[i - 1][0] == "tableItem") {
+                        if(this.keepsOrigin[keep].table_keep_text[i][1].length > 2) {
+                            if(this.keepsOrigin[keep].table_keep_text[i][1].substring(0, 3) == "&t$") {
+                                this.new_keep_data[this.new_keep_data.length - 1][1].push([this.keepsOrigin[keep].table_keep_text[i][1].substring(3), true]);
+                            } else if(this.keepsOrigin[keep].table_keep_text[i][1].substring(0, 3) == "&f$") {
+                                this.new_keep_data[this.new_keep_data.length - 1][1].push([this.keepsOrigin[keep].table_keep_text[i][1].substring(3), false]);
+                            } else {
+                                this.new_keep_data[this.new_keep_data.length - 1][1].push([this.keepsOrigin[keep].table_keep_text[i][1]]);
+                            }
+                        } else {
+                            this.new_keep_data[this.new_keep_data.length - 1][1].push([this.keepsOrigin[keep].table_keep_text[i][1]]);
+                        }
+                    } else if(this.keepsOrigin[keep].table_keep_text[i][0] == "paragraph") {
+                        this.new_keep_data.push([this.keepsOrigin[keep].table_keep_text[i][0], this.keepsOrigin[keep].table_keep_text[i][1]]);
+                    } else {
+                        if(this.keepsOrigin[keep].table_keep_text[i][1].length > 2) {
+                            if(this.keepsOrigin[keep].table_keep_text[i][1].substring(0, 3) == "&t$") {
+                                this.new_keep_data.push([this.keepsOrigin[keep].table_keep_text[i][0], [[this.keepsOrigin[keep].table_keep_text[i][1].substring(3), true]]]);
+                            } else if(this.keepsOrigin[keep].table_keep_text[i][1].substring(0, 3) == "&f$") {
+                                this.new_keep_data.push([this.keepsOrigin[keep].table_keep_text[i][0], [[this.keepsOrigin[keep].table_keep_text[i][1].substring(3), false]]]);
+                            } else {
+                                this.new_keep_data.push([this.keepsOrigin[keep].table_keep_text[i][0], [[this.keepsOrigin[keep].table_keep_text[i][1]]]]);
+                            }
+                        } else {
+                            this.new_keep_data.push([this.keepsOrigin[keep].table_keep_text[i][0], [[this.keepsOrigin[keep].table_keep_text[i][1]]]]);
+                        }
+                    }
+                }
+                if(this.new_keep_data.length > 0) {
+                    if(this.new_keep_data[this.new_keep_data.length - 1][0] == "tableItem") 
+                        this.new_keep_data.push(["paragraph", ""]);
+                }
+                $('#new-keep-modal').modal('show');
+            },
+            add_table: function() {
+                this.new_keep_data.push(["tableItem", [[""]]]);
+                this.new_keep_data.push(["paragraph", ""]);
+            },
+            fb_ta: function(what) {
+                if(what == "make_checked") {
+                    this.text_change_checked = false;
+                    this.is_table = true;
+                } else if(what == "make_unchecked") {
+                    this.text_change_checked = true;
+                    this.is_table = true;
+                } else {
+                    this.is_table = false;
+                }
+            },
+            change_checked: function() {
+                let data_cash = this.new_keep_data[which_table];
+                if(this.text_change_checked) {
+                    for(let line in data_cash[1]) {
+                        data_cash[1][line].push(false);
+                    }
+                } else {
+                    for(let line in data_cash[1]) {
+                        this.$set(data_cash[1], line, [data_cash[1][line][0]]);
+                    }
+                }
+                this.$set(this.new_keep_data, which_table, data_cash);
+            },
+            save: function() {
+                let name;
+                let keepParams;
+                let keepNextEvent;
+                if (this.keepName != "") {
+                    name = this.keepName;
+                    JSON_keep_params = JSON.parse(this.keepsOrigin[this.keepName].keep_params);
+                    JSON_keep_params['color_keep'] = this.keepColor;
+                    keepParams = JSON.stringify(JSON_keep_params);
+                    keepNextEvent = this.keepsOrigin[this.keepName].keep_next_event;
+                } else {
+                    name = "w" + Date.parse(new Date());
+                    keepParams = JSON.stringify({'color_keep': this.keepColor, 'font_family_number_keep': 0, 'font_family_path_keep': 'Sans-Serif',
+                            'text_size_keep': 20, 'date_redact': new Date().getTime()});
+                    keepNextEvent = '0';
+                }
+                var newKeep = {};
+                newKeep.keep_params = keepParams;
+                newKeep.keep_next_event = keepNextEvent;
+                newKeep.table_keep_text = [["title", this.title], ["paragraph", this.paragraph]];
+                for(let index in this.new_keep_data) {
+                    if(this.new_keep_data[index][0] == "paragraph" && this.new_keep_data[index][1] != "") {
+                        newKeep.table_keep_text.push(this.new_keep_data[index]);
+                    } else if(this.new_keep_data[index][0] == "tableItem") {
+                        for(let item_table in this.new_keep_data[index][1]) {
+                            if (this.new_keep_data[index][1][item_table][0] != "") {
+                                if(typeof this.new_keep_data[index][1][item_table][1] == 'boolean') {
+                                    if(this.new_keep_data[index][1][item_table][1])
+                                        newKeep.table_keep_text.push(["tableItem", "&t$" + this.new_keep_data[index][1][item_table][0]]);
+                                    else
+                                        newKeep.table_keep_text.push(["tableItem", "&f$" + this.new_keep_data[index][1][item_table][0]]);
+                                } else {
+                                    newKeep.table_keep_text.push(["tableItem", this.new_keep_data[index][1][item_table][0]]);
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                this.keeps[name] = newKeep;
+                this.keepsOrigin[name] = newKeep;
+                this.keepName = "";
+                this.keepColor = -1;
+                this.title = "";
+                this.paragraph = "";
+                this.new_keep_data = [];
+                this.textareaRows = 2;
+                    
+                $('#new-keep-modal').modal('hide');
+                
+                var sendData = this.keepsOrigin;
+                
+                $(function() {
+                    $.ajax({
+                        url: '../add_keep.php',
+                        type: 'POST',
+                        data: {login: localStorage.getItem("login"), pass: localStorage.getItem("pass"), keepData: JSON.stringify(sendData)}
+                    });
+                });
+            },
+            remove: function() {
+                if (this.keepName != "") {
+                    delete this.keeps[this.keepName];
+                    this.keepsOrigin[this.keepName] = null;
+                    this.keepName = "";
+                    this.keepColor = -1;
+                    this.title = "";
+                    this.paragraph = "";
+                    this.new_keep_data = [];
+                    this.textareaRows = 2;
+                }
+                
+                var sendData = this.keepsOrigin;
+                
+                $(function() {
+                    $.ajax({
+                        url: '../add_keep.php',
+                        type: 'POST',
+                        data: {login: localStorage.getItem("login"), pass: localStorage.getItem("pass"), keepData: JSON.stringify(sendData)}
+                    });
+                });
+            },
+            changeBackImage: function() {
+                if ($('#back-image-up')[0].files.length != 0) {
+                    var file = $('#back-image-up')[0].files[0];
+                    var fd = new FormData;
+                    
+                    fd.append('files', file);
+                    fd.append('login', localStorage.getItem("login"));
+                    fd.append('pass', localStorage.getItem("pass"));
+                
+                    $.ajax({
+                        url: '../back_image.php',
+                        type: 'POST',
+                        data: fd,
+                        processData: false,
+                        contentType: false,
+                        success: function(data) {
+                            $('body').css('backgroundImage', 'url("' + data + '")');
+                            umemo.haveBackImage = true;
+                        }
+                    });
+                }
+            },
+            deleteBackImage: function() {
+                $.ajax({
+                    url: '../back_image.php',
+                    type: 'POST',
+                    data: {login: localStorage.getItem("login"), pass: localStorage.getItem("pass"), comand: "delete"},
+                    success: function(data) {
+                        $('body').css('backgroundImage', "");
+                        umemo.haveBackImage = false;
+                    }
+                });
+            },
+            copyKeep: function(keep) {
+                let name = "w" + Date.parse(new Date());
+                
+                this.$set(this.keeps, name, this.keepsOrigin[keep]);
+                this.$set(this.keepsOrigin, name, this.keepsOrigin[keep]);
+                
+                var sendData = this.keepsOrigin;
+                
+                $(function() {
+                    $.ajax({
+                        url: '../add_keep.php',
+                        type: 'POST',
+                        data: {login: localStorage.getItem("login"), pass: localStorage.getItem("pass"), keepData: JSON.stringify(sendData)}
+                    });
+                });
+            }
+        }
+    });
+    $('#new-keep-modal').on('hidden.bs.modal', function () {
+        umemo.keepName = "";
+        umemo.title = "";
+        umemo.paragraph = "";
+        umemo.new_keep_data = [];
+        umemo.textareaRows = 2;
+    });
+    $('#new-keep-modal').on('show.bs.modal', function () {
+        setTimeout(function () {
+            let tas = document.getElementsByClassName('table_item');
+            for(let index = 0; index < tas.length; index++) {
+                textAreaHeight(tas[index]);
+            }
+        }, 200);
+    });
+    
+    function textAreaHeight(textarea) {
+        if (!textarea._tester) {
+            var ta = textarea.cloneNode(false);
+            ta.classList.remove('table_item');
+            ta.style.position = 'absolute';
+            ta.style.zIndex = -2000000;
+            ta.style.visibility = 'hidden';
+            ta.style.height = '1px';
+	        ta.id = '';
+	        ta.name = '';
+            textarea.parentNode.appendChild(ta);
+            textarea._tester = ta;
+            textarea._offset = ta.clientHeight - 1;
+        }
+	    if (textarea._timer) clearTimeout(textarea._timer);
+        textarea._timer = setTimeout(function () {
+            textarea._tester.style.width = textarea.clientWidth + 'px';
+            textarea._tester.value = textarea.value;
+            textarea.style.height = (textarea._tester.scrollHeight - textarea._offset) + 7 + 'px';
+            textarea._timer = false;
+        }, 1);
+    }
+    
+    $(function() {
+        $('#search-block').hover(function() {
+            $('#search-input').focus();
+        });
+    });
+</script>
+</body>
+</html>

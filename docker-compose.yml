@@ -15,7 +15,6 @@ services:
   web:
     restart: unless-stopped
     build: .
-    user: "www-data:www-data"
     container_name: admire_umemo
     depends_on:
       - db

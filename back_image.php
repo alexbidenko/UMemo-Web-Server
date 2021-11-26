@@ -35,7 +35,6 @@ function make_upload($file, $login, $pass){
     $extension = end($array);
 
 	$name = mt_rand(0, 9999) . mt_rand(0, 9999) . mt_rand(0, 9999) . '.' . $extension;
-	mkdir('back_images/', 0777);
 	copy($file['tmp_name'], 'back_images/'.$name);
 	echo '../back_images/'.$name;
 	

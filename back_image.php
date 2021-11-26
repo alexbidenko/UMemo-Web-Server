@@ -52,14 +52,14 @@ if($result->num_rows > 0)
 {
     $row = $result->fetch_assoc();
     if(isset($_POST['comand']) && $_POST['comand'] == "delete") {
-      	unlink('back_images/'.$row['back_image']);
+        if (file_exists('back_images/'.$row['back_image'])) unlink('back_images/'.$row['back_image']);
       	
         $mysqli->query("UPDATE users_01_01_2019_sing_data SET back_image = null WHERE login = '".$_POST['login']."' AND pass = '".$_POST['pass']."';");
     } else {
       	// проверяем, можно ли загружать изображение
       	$check = can_upload($_FILES['files']);
       	
-      	unlink('back_images/'.$row['back_image']);
+      	if (file_exists('back_images/'.$row['back_image'])) unlink('back_images/'.$row['back_image']);
     
       	if($check === true){
             // загружаем изображение на сервер

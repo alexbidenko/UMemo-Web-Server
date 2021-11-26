@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli("81.90.180.128", "umemo_server", "server_umemo", "umemo_database");
+$mysqli = new mysqli("db", "umemo_server", "server_umemo", "umemo_database");
 
 $create_keeps_json = [];
 

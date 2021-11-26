@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Umemo</title>
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<style type="text/css">
+h1 {
+    display: inline-block;
+}
+.u {
+    background-color: #fff;
+    color: #4a148c;
+    width: 68px;
+    height: 68px;
+    text-align: center;
+    margin: 0;
+}
+#regist-alert {
+    transform: scaleY(0);
+    transition-property: transform;
+    transition-duration: .2s;
+}
+.img-link {
+    height: 24px;
+    width: 24px;
+    background-size: contain;
+}
+#gmail-img-link {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png');
+}
+#tel-img-link {
+    background-image: url('http://s1.iconbird.com/ico/2013/9/446/w512h5121380376664MetroUIPhoneAlt.png');
+}
+#whatsapp-img-link {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/19/WhatsApp_logo-color-vertical.svg');
+}
+#vk-img-link {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/21/VK.com-logo.svg');
+}
+</style>
+
+<script type="text/javascript">
+</script>
+</head>
+<body>
+    
+    <div class="container-fluid p-0" id="umemo">
+        <div class="shadow container-fluid p-4 m-0" style="background-color: #4a148c">
+            <div class="row">
+                <div class="col-lg-10 col-md-9 col-sm-12">
+                    <h1 class="rounded-circle display-4 u">U</h1>
+                    <h1 class="text-white display-4">Memo</h1>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-12" style="vertical-align: middle; padding-top: 16px;">
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#regist-modal">Регистрация</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container py-4">
+            <form class="row">
+                <div class="col-12 col-sm-12 col-md-6">
+                    <div class="input-group mb-2">
+                        <input type="text" id="login-input" name="login" class="form-control" placeholder="Логин" v-model="login" @keyup.enter="enterDown">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 text-right">
+                    <div class="input-group mb-2">
+                        <input type="password" id="pass-input" name="password" class="form-control" placeholder="Пароль" v-model="pass" @keyup.enter="enterDown">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="button" class="btn btn-outline-secondary btn-lg btn-block my-4" @click="singIn">Войти</button>
+                </div>
+            </form>
+            
+            <div id="in-alert" class="alert alert-warning alert-dismissible fade show" style="opacity: 0;" role="alert"></div>
+            
+            <div class="shadow jumbotron mb-0">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-md-8">
+                            <h1 class="display-4">UMemo для Android</h1>
+                            <p class="lead">Предлагаю скачать для большего удобства наше мобильное приложение UMemo. Все заметки будут синхронизироваться и видны с любого браузера и на любом мобильном устройстве.</p>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div id="slide-show" class="carousel slide border rounded" style="padding: 0 48px; background-color: #7c43bd;" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#slide-show" data-slide-to="0" class="active"></li>
+                                    <li data-target="#slide-show" data-slide-to="1"></li>
+                                    <li data-target="#slide-show" data-slide-to="2"></li>
+                                    <li data-target="#slide-show" data-slide-to="3"></li>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="/site-images/jbt-1.jpg" class="d-block w-100" alt="Скриншот мобильного приложения">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/site-images/jbt-2.jpg" class="d-block w-100" alt="Скриншот мобильного приложения">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/site-images/jbt-3.jpg" class="d-block w-100" alt="Скриншот мобильного приложения">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/site-images/jbt-4.jpg" class="d-block w-100" alt="Скриншот мобильного приложения">
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#slide-show" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                </a>
+                                <a class="carousel-control-next" href="#slide-show" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <p>Ссылка на скачивание apk файла</p>
+                <p><small>Последнее обновление 19:00 29.01.2019</small></p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="../umemo.apk" role="button">Скачать</a>
+                </p>
+            </div>
+        </div>
+        
+        <footer class="shadow pt-2" style="background-color: #7c43bd;">
+            <div class="container py-2">
+                <div class="row">
+                    <p class="d-inline-block col-7 col-md-8 align-middle h6 font-weight-light text-white">Партнеры сервиса: </p>
+                    <span class="d-inline-block col-5 col-md-4 pl-0">
+                        <a class="d-inline-block align-middle text-white mr-2" href="https://admire.social">
+                            Admire Social
+                        </a>
+                        <a class="d-inline-block align-middle text-white mr-2" href="https://fur-chins.ru">
+                            ABFC - Меховые шиншиллы
+                        </a>
+                    </span>
+                </div>
+                <div class="row">
+                    <p class="d-inline-block col-7 col-md-8 align-middle h6 font-weight-light text-white">Связь с разработчиком: </p>
+                    <span class="d-inline-block col-5 col-md-4">
+                        <a class="d-inline-block align-middle" style="margin: 0 calc(12% - 13px);" href="mailto:alexbidenko1998@gmail.com">
+                            <h2 class="text-hide img-link" id="gmail-img-link" data-toggle="tooltip" data-placement="top" title="alexbidenko1998@gmail.com">Gmail</h2>
+                        </a>
+                        <a class="d-inline-block align-middle" style="margin: 0 calc(12% - 13px);" href="tel:89528313364">
+                            <h2 class="text-hide img-link" id="tel-img-link" data-toggle="tooltip" data-placement="top" title="+7-(952)-831-3363">Телефон</h2>
+                        </a>
+                        <a class="d-inline-block align-middle" style="margin: 0 calc(12% - 13px);" href="https://wa.me/79528313364">
+                            <h2 class="text-hide img-link" id="whatsapp-img-link" data-toggle="tooltip" data-placement="top" title="+7-(952)-831-3363">WhatsApp</h2>
+                        </a>
+                        <a class="d-inline-block align-middle" style="margin: 0 calc(12% - 13px);" href="https://vk.com/alexbidenko">
+                            <h2 class="text-hide img-link" id="vk-img-link" data-toggle="tooltip" data-placement="top" title="id: alexbidenko">VK</h2>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </footer>
+        
+        <div class="modal fade" id="regist-modal" data-target="#title-regist-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="title-regist-modal">Добро пожаловать в UMemo!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="new-login">Придумайте логин</label>
+                                <input type="email" class="form-control" id="new-login" placeholder="Логин" autocomplete="off" v-model="newLogin" @keyup.enter="enterRegistDown">
+                            </div>
+                            <div class="form-group">
+                                <label for="new-pass">Придумайте пароль</label>
+                                <input type="password" class="form-control" id="new-pass" placeholder="Пароль" autocomplete="off" v-model="newPass" @keyup.enter="enterRegistDown">
+                            </div>
+                            <div class="form-group">
+                                <label for="repeat-pass">Введите пароль еще раз</label>
+                                <input type="password" class="form-control" id="repeat-pass" placeholder="Повторите пароль" autocomplete="off" v-model="repeatPass" @keyup.enter="enterRegistDown">
+                            </div>
+                            <div class="form-group">
+                                <label for="repeat-pass">Введите ваш email</label>
+                                <input type="email" class="form-control" id="new-email" placeholder="example@mail.com" autocomplete="off" v-model="newEmail" @keyup.enter="enterRegistDown">
+                            </div>
+                            <div id="regist-alert" class="alert alert-warning alert-dismissible fade show" role="alert"></div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-primary" @click="regist">Зарегистрироваться</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<script type="text/javascript">
+    var umemo = new Vue({
+        el: "#umemo",
+        data: {
+            login: "",
+            pass: "",
+            
+            newLogin: "",
+            newPass: "",
+            repeatPass: "",
+            newEmail: ""
+        },
+        methods: {
+            singIn: function() {
+                if (this.login === "") $('#login-input').focus();
+                else if (this.pass === "") $('#pass-input').focus();
+                $('#in-alert').css('opacity', 0);
+                const exp = /[A-Za-z0-9]{6,}/;
+                if (exp.test(this.login) && exp.test(this.pass)) {
+                    $.ajax({
+                        url: '../singIn.php',
+                        type: 'POST',
+                        data: {comand: "enter", login: umemo.login, pass: umemo.pass},
+                        success: function(data) {
+                            if (data !== "not_pass") {
+                                localStorage.setItem("login", umemo.login);
+                                localStorage.setItem("pass", umemo.pass);
+                                location.href = "/";
+                            } else {
+                                $('#in-alert').text('Неверный логин или пароль.');
+                                $('#in-alert').css('opacity', 1);
+                            }
+                        }
+                    });
+                } else {
+                    $('#in-alert').text('Логин и пароль должны содержать не менее 6 символов латинского алфавита или цифр.');
+                    $('#in-alert').css('opacity', 1);
+                }
+            },
+            regist: function() {
+                if (this.newLogin === "") $('#new-login').focus();
+                else if (this.newPass === "") $('#new-pass').focus();
+                else if (this.repeatPass === "") $('#repeat-pass').focus();
+                else if (this.newEmail === "") $('#new-email').focus();
+                $('#regist-alert').css('transform', 'scaleY(0)');
+                const exp = /[A-Za-z0-9]{6,}/;
+                if (exp.test(this.newLogin) && exp.test(this.newPass) && exp.test(this.repeatPass)) {
+                    if (this.newPass === this.repeatPass) {
+                        $.ajax({
+                            url: '../singIn.php',
+                            type: 'POST',
+                            data: {comand: "regist", login: umemo.newLogin, pass: umemo.newPass, email: umemo.newEmail},
+                            success: function(data) {
+                                if (data !== "no") {
+                                    localStorage.setItem("login", umemo.newLogin);
+                                    localStorage.setItem("pass", umemo.newPass);
+                                    location.href = "/";
+                                } else {
+                                    $('#regist-alert').text('Такой логин уже занят.');
+                                    $('#regist-alert').css('transform', 'scaleY(1)');
+                                }
+                            }
+                        });
+                    } else {
+                        $('#regist-alert').text('Пароли не совпадают.');
+                        $('#regist-alert').css('transform', 'scaleY(1)');
+                    }
+                } else {
+                    $('#regist-alert').text('Логин и пароль должны содержать не менее 6 символов латинского алфавита или цифр.');
+                    $('#regist-alert').css('transform', 'scaleY(1)');
+                }
+            },
+            enterDown: function() {
+                if (this.login === "") $('#login-input').focus();
+                else if (this.pass === "") $('#pass-input').focus();
+                else this.singIn();
+            },
+            enterRegistDown: function() {
+                if (this.newLogin === "") $('#new-login').focus();
+                else if (this.newPass === "") $('#new-pass').focus();
+                else if (this.repeatPass === "") $('#repeat-pass').focus();
+                else if (this.newEmail === "") $('#new-email').focus();
+                else this.regist();
+            }
+        }
+    });
+</script>
+</body>
+</html>

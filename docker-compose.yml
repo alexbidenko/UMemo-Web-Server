@@ -19,7 +19,7 @@ services:
     depends_on:
       - db
     volumes:
-      - application:/var/www/html
+      - back-images:/var/www/html/back-images
     stdin_open: true
     tty: true
     networks:
@@ -27,7 +27,7 @@ services:
       - server
 
 volumes:
-  application:
+  back-images:
 
 networks:
   app_network:

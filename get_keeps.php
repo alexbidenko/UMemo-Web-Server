@@ -23,7 +23,7 @@ if($result->num_rows > 0) {
     }
 }
 
-$result = $mysqli->query("SELECT * FROM keeps_text_".$_POST['login']."_".$_POST['pass'].";");
+$result = $mysqli->query("SELECT * FROM keeps_text_".$_POST['login']."_".$_POST['pass']." ORDER BY id_data ASC;");
 
 if($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -36,4 +36,3 @@ if($result->num_rows > 0) {
 }
 
 echo json_encode((object)$create_keeps_json, JSON_PRETTY_PRINT);
-?>

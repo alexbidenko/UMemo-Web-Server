@@ -9,6 +9,8 @@ services:
       MYSQL_DATABASE: umemo_database
       MYSQL_USER: umemo_server
       MYSQL_PASSWORD: server_umemo
+    networks:
+      - app_network
 
   web:
     restart: unless-stopped
@@ -18,10 +20,11 @@ services:
       - db
     volumes:
       - application:/var/www/html
-    ports:
-      - "8100:80"
     stdin_open: true
     tty: true
+    networks:
+      - app_network
+      - server
 
 volumes:
   application:
